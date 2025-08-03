@@ -1,14 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     loadTasks();
 
-    const addTaskBtn = document.getElementById('addTaskBtn');
-    const taskInput = document.getElementById('taskInput');
+    const addButton = document.getElementById('add-task-btn');  // ✅ Correct name
+    const taskInput = document.getElementById('task-input');     // ✅ Correct name
+    const taskList = document.getElementById('task-list');       // ✅ Correct name
 
-    addTaskBtn.addEventListener('click', () => {
+    addButton.addEventListener('click', () => {
         const taskText = taskInput.value.trim();
         if (taskText !== '') {
             addTask(taskText);
             taskInput.value = '';
+        } else {
+            alert('Please enter a task');
         }
     });
 });
@@ -19,7 +22,7 @@ function loadTasks() {
 }
 
 function addTask(taskText, save = true) {
-    const taskList = document.getElementById('taskList');
+    const taskList = document.getElementById('task-list');
 
     const li = document.createElement('li');
     li.textContent = taskText;
