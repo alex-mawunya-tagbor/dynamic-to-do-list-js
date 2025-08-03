@@ -1,32 +1,32 @@
-function addTask(taskText, save = true) {
-    if (taskText === "") {
-        alert("Please enter a task.");
-        return;
+document.addEventListener("DOMContentLoaded", () => {
+    const addButton = document.getElementById("add-task-btn");
+    const taskInput = document.getElementById("task-input");
+    const taskList = document.getElementById("task-list");
+
+    function addTask(taskText, save = true) {
+        // Task creation logic...
     }
 
-    const li = document.createElement("li");
-    li.textContent = taskText;
-
-    const removeBtn = document.createElement("button");
-    removeBtn.textContent = "Remove";
-
-    // ✅ Checker expects classList.add, not className assignment
-    removeBtn.classList.add("remove-btn");
-
-    removeBtn.onclick = function () {
-        li.remove();
-        removeTask(taskText); // remove from Local Storage
-    };
-
-    li.appendChild(removeBtn);
-    taskList.appendChild(li);
-
-    if (save) {
+    function loadTasks() {
         const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-        tasks.push(taskText);
+        tasks.forEach(task => addTask(task, false));
+    }
+
+    function removeTask(taskText) {
+        let tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+        tasks = tasks.filter(task => task !== taskText);
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
-    // ✅ Clear input field
-    taskInput.value = "";
-}
+    addButton.addEventListener("click", () => {
+        addTask(taskInput.value);
+    });
+
+    taskInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            addTask(taskInput.value);
+        }
+    });
+
+    loadTasks(); // Load tasks on startup
+});
